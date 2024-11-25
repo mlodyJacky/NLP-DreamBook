@@ -16,12 +16,44 @@ luck_perc = 0
 
 class ChatApp(App):
     def build(self):
-        self.root_layout = BoxLayout(orientation='vertical')
+
+        self.root_layout = BoxLayout(orientation='horizontal')
+
+        # LEWA STRONA
+        self.left_layout = BoxLayout(size_hint=(0.2, 1))
+        with self.left_layout.canvas.before:
+            Color(0.8, 0.8, 0.8, 1)
+            self.rect_left = Rectangle(size=self.left_layout.size, pos=self.left_layout.pos)
+        self.left_layout.bind(size=self._update_rect_left, pos=self._update_rect_left)
+        self.root_layout.add_widget(self.left_layout)
+
+
+        self.left_scroll = ScrollView(size_hint=(1, 1))
+        self.left_grid = GridLayout(cols=1, size_hint_y=None, spacing=10, padding=10)
+        self.left_grid.bind(minimum_height=self.left_grid.setter('height'))
+        self.left_scroll.add_widget(self.left_grid)
+        self.left_layout.add_widget(self.left_scroll)
+
+        # KWADRATY PO LEWO (dzienniki)
+        for i in range(1, 21):
+            number_box = BoxLayout(size_hint=(1, None), height=50)
+            with number_box.canvas.before:
+                Color(0.6, 0.6, 0.6, 1) 
+                Rectangle(size=number_box.size, pos=number_box.pos)
+            number_box.bind(size=self._update_rect_box, pos=self._update_rect_box)
+
+            number_label = Label(text=str(i), size_hint=(1, 1), halign='center', valign='middle')
+            number_label.text_size = number_label.size
+            number_box.add_widget(number_label)
+            self.left_grid.add_widget(number_box)
+
+        # PRAWA STRONA (czat i ikonki)
+        right_layout = BoxLayout(orientation='vertical', size_hint=(0.8, 1))
 
         # GÓRNY PASEK (z ikonami)
         self.top_bar = BoxLayout(size_hint_y=None, height=200, padding=10, spacing=10)
         with self.top_bar.canvas.before:
-            Color(0.5, 0.5, 0.5, 1)  # Tło szare
+            Color(0.5, 0.5, 0.5, 1)
             self.rect = Rectangle(size=self.top_bar.size, pos=self.top_bar.pos)
         self.top_bar.bind(size=self._update_rect, pos=self._update_rect)
 
@@ -31,6 +63,7 @@ class ChatApp(App):
         fear_icon = Image(source='fear.png', size_hint=(None, None), size=(80, 80), pos_hint={"center_y": 0.5})
 
         # Wyswietlenie emotki szczescia wraz z wartoscia procentowa (czy cokolwiek co bedziemy uzywac)
+
         # Etykieta dla szczęścia
         happy_layout = BoxLayout(orientation='vertical', size_hint=(None, None), size=(80, 120))
         happy_layout.add_widget(happy_icon)
@@ -50,14 +83,14 @@ class ChatApp(App):
         fear_layout.add_widget(self.fear_label)
         self.top_bar.add_widget(fear_layout)
 
-        self.root_layout.add_widget(self.top_bar)
+        right_layout.add_widget(self.top_bar)
 
         # OBSZAR CZATU
         self.scroll_view = ScrollView(size_hint=(1, 1))
         self.messages_layout = GridLayout(cols=1, size_hint_y=None, spacing=10)
         self.messages_layout.bind(minimum_height=self.messages_layout.setter('height'))
         self.scroll_view.add_widget(self.messages_layout)
-        self.root_layout.add_widget(self.scroll_view)
+        right_layout.add_widget(self.scroll_view)
 
         # DOLNY PASEK, POLE TEKSTOWE I PRZYCISK
         self.bottom_bar = BoxLayout(size_hint_y=None, height=50)
@@ -68,13 +101,20 @@ class ChatApp(App):
 
         self.bottom_bar.add_widget(self.text_input)
         self.bottom_bar.add_widget(self.submit_button)
-        self.root_layout.add_widget(self.bottom_bar)
+        right_layout.add_widget(self.bottom_bar)
+
+        # DODAJ PRAWĄ STRONĘ DO GŁÓWNEGO UKŁADU
+        self.root_layout.add_widget(right_layout)
 
         return self.root_layout
 
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
+
+    def _update_rect_left(self, instance, value):
+        self.rect_left.pos = instance.pos
+        self.rect_left.size = instance.size
 
     def submit_text(self, instance):
         user_message = self.text_input.text
@@ -90,6 +130,12 @@ class ChatApp(App):
             self.messages_layout.add_widget(bot_label)
 
             self.text_input.text = ""
+    
+    def _update_rect_box(self, instance, value):
+        for widget in instance.canvas.before.children:
+            if isinstance(widget, Rectangle):
+                widget.pos = instance.pos
+                widget.size = instance.size
 
         
     def update_percentages(self, fear, luck):
