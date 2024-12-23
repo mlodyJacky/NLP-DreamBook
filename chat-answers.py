@@ -1,10 +1,25 @@
-from transformers import pipeline
+from langchain_ollama import OllamaLLM
+from langchain_core.prompts import ChatPromptTemplate
 
+template = """
+    You are an expert in dream interpretation. Based on symbolism, psychology, and medicine, interpret the dream and provide its hidden meaning. Your response should be short, maximum 500 characters long
+    Dream: {dream}
 
-generator = pipeline("text-generation", model="gpt-3.5-turbo")
+    Interpretation:
+"""
 
-#Jak to mozna zrobic np. mozna tak zrobic z podsumowaniem lub interpretacja, ale poki co sprobuje rekomendacje zrobic recznie
-def generate_recommendation_with_gpt(user_message):
-    prompt = f"Analizuj ten sen: {user_message}. Podaj medyczne porady na temat poprawy jakości snu lub napisz że wszystko jest w porządku jeśli sen nie ma problemów."
-    response = generator(prompt, max_length=500, num_return_sequences=1)
-    return response[0]['generated_text']
+model = OllamaLLM(model="llama3.2-vision")
+prompt = ChatPromptTemplate.from_template(template)
+chain = prompt | model
+
+dream_description = """
+    I was being pursued by someone in a vehicle trying to run me down. Being in an orchard,
+    I was able to duck behind whatever tree was nearby. Then I found myself far from any tree trunk, 
+    but I managed to leap up, grab a branch, and pull myself to safety. However, the driver skidded the vehicle
+    to a stop and aimed a pistol at me. The click I heard which wakened me came from an alarm clock.
+    My heart was racing when I awoke.
+"""
+
+result = chain.invoke({"dream": dream_description})
+
+print(result)
