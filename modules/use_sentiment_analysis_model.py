@@ -1,7 +1,5 @@
 import pickle
 
-
-
 def predict_emotion(dream_text):
     with open('emotion_models_regressor.pkl', 'rb') as f:
         emotion_models = pickle.load(f)
@@ -16,14 +14,14 @@ def predict_emotion(dream_text):
     
     return prediction
 
+dream = """
+        I was being pursued by someone in a vehicle trying to run me down. Being in an orchard,
+        I was able to duck behind whatever tree was nearby. Then I found myself far from any tree trunk, 
+        but I managed to leap up, grab a branch, and pull myself to safety. However, the driver skidded the vehicle
+        to a stop and aimed a pistol at me. The click I heard which wakened me came from an alarm clock.
+        My heart was racing when I awoke.
+    """
 
-
-dream = """ It's dark at night and I'm driving my car in the rain. I stop and all the sudden I'm at 
-the front door of someone's house (I've never seen this doorway before). This girl I work with at Beach City 
-named Mary answers the door. She starts talking and says something like, Im so glad you're finally asking me out.
-Talking to you at work was getting so awkward. For some reason I can't tell her that I don't like her at all,
-and next we're both in my car driving to the mall. Now we're walking around a whole bunch of different food courts
-and I keep thinking, This girl really likes me. I could easily get a piece, then never talk to her again. But I know 
-this would be wrong. While Im debating this, I wake up. """
 predicted_emotions = predict_emotion(dream)
+
 print("Predykcja emocji:", predicted_emotions)

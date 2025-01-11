@@ -3,10 +3,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 import pickle
 
-with open('dreams/dreams_with_emotions.json', 'r', encoding='utf-8') as f:
+with open('../dreams/dreams_with_emotions.json', 'r', encoding='utf-8') as f:
     dreams_data = json.load(f)
 
 data = pd.DataFrame(dreams_data)
@@ -35,6 +35,8 @@ with open('emotion_models_regressor.pkl', 'wb') as f:
 with open('vectorizer.pkl', 'wb') as f:
     pickle.dump(vectorizer, f)
 
+
+
 X_test_tfidf = vectorizer.transform(X_test)
 y_pred = {}
 
@@ -42,9 +44,9 @@ for label in labels:
     y_pred[label] = emotion_models[label].predict(X_test_tfidf)
 
 for label in labels:
-    mse = mean_squared_error(y_test[label], y_pred[label])
+    rmse = root_mean_squared_error(y_test[label], y_pred[label])
     print(f"Emotion: {label}")
-    print(f"Mean Squared Error: {mse}")
+    print(f"Root Mean Squared Error: {rmse}")
 
 def predict_emotion(dream_text):
     dream_tfidf = vectorizer.transform([dream_text])
@@ -53,6 +55,6 @@ def predict_emotion(dream_text):
         prediction[label] = emotion_models[label].predict(dream_tfidf)[0]
     return prediction
 
-new_dream = "My dream was about flying and being free. I felt so happy and joyful. I was also scared and angry"
-predicted_emotions = predict_emotion(new_dream)
-print("Predykcja emocji:", predicted_emotions)
+# new_dream = "My dream was about flying and being free. I felt so happy and joyful. I was also scared and angry"
+# predicted_emotions = predict_emotion(new_dream)
+# print("Predykcja emocji:", predicted_emotions)

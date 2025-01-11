@@ -5,11 +5,8 @@ def analyze_sleep_issues(user_message):
 
     issues = []
 
-
-
     if re.search(r"\bwake(?:s|d|ing)?\b|\bfrequent waking\b|\brestless nights?\b|\binterrupt(?:ed|ing)? sleep\b|\bbroken sleep\b|\bkeep waking\b|\bwaking frequently\b|\bmy sleep was interrupted\b|\bwake up repeatedly\b|\bconstant waking\b|\bmultiple awakenings\b|\bawaken(?:ed|ing)? frequently\b|\bwake(?:s|d|ing)? in the night\b|\binterrupted my rest\b|\bnocturnal waking\b|\bawake repeatedly\b|\bstruggling to stay asleep\b|\bkept waking\b|\bfrequent awakenings\b|\bhaving trouble staying asleep\b|\bwide awake in the middle of the night\b", user_message):
         issues.append("częste budzenie się")
-
 
     if re.search(r"\bnightmare(?:s)?\b|\bscary dream(?:s)?\b|\btraumatic dream(?:s)?\b|\bterrifying dream(?:s)?\b|\bbad dream(?:s)?\b|\bhorrific dream(?:s)?\b|\bviolent dream(?:s)?\b|\bfrightening dream(?:s)?\b|\bdreadful dream(?:s)?\b|\bnight terror(?:s)?\b|\bdisturbing dream(?:s)?\b|\bshocking dream(?:s)?\b|\bnightmare(?:s)?\b|\bunsettling dream(?:s)?\b|\bdeeply disturbing dream(?:s)?\b|\bfearful dream(?:s)?\b|\bparalyzing nightmare(?:s)?\b|\bvivid nightmare(?:s)?\b|\bunpleasant dream(?:s)?\b|\bgruesome dream(?:s)?\b|\bcreepy dream(?:s)?\b|\bchilling dream(?:s)?\b", user_message):
         issues.append("koszmary")
@@ -62,7 +59,6 @@ def analyze_sleep_issues(user_message):
     if re.search(r"\bsnore(?:s|d|ing)?\b|\bloud breathing\b|\bnasal issues\b|\bnasal blockages\b|\bchronic snoring\b|\bsnoring loudly\b|\bsnore at night\b|\bnoisy breathing\b|\bbreathing issues\b|\bbreathing heavily\b|\bblocked nose\b|\bcongested nose\b|\bobstructed airway\b|\bdifficulty breathing\b|\bdifficulty inhaling\b|\bdifficulty exhaling\b|\bnasal congestion\b|\bstruggling to breathe\b|\bhaving trouble breathing\b|\bheavy snoring\b|\bsnoring sound\b|\binterrupted breathing\b|\bpauses in breathing\b|\bmouth breathing\b|\bsnoring during sleep\b|\bsnoring in my sleep\b|\bsnoring every night\b|\bnasal obstruction\b|\bchoking during sleep\b|\bbreathing stops\b|\bapnea\b|\bsleep apnea\b|\bbreathing difficulties\b", user_message):
         issues.append("chrapanie")
 
-
     if re.search(r"\bhard to (fall|get) asleep\b|\bcan't fall asleep\b|\bdifficulty falling asleep\b|\bdifficulty initiating sleep\b|\bstruggle to fall asleep\b|\bcan't get to sleep\b|\bdifficulty getting to sleep\b|\btakes too long to fall asleep\b|\bit takes hours to fall asleep\b|\bfalling asleep is hard\b|\btrouble falling asleep\b|\btrouble getting to sleep\b|\bhours to fall asleep\b|\bcannot sleep\b|\bcannot get to sleep\b|\bsleep onset difficulties\b|\bhaving trouble sleeping\b|\bwaiting to fall asleep\b|\bcan't seem to fall asleep\b|\blying awake\b|\blying in bed for hours\b|\bunable to sleep\b|\bbattle to fall asleep\b", user_message):
         issues.append("trudność z zaśnięciem")
 
@@ -87,7 +83,7 @@ def analyze_sleep_issues(user_message):
     if re.search(r"\bheadache\b|\bmigraine\b|\bsharp pain in head\b|\bpressure in head\b|\bhead pain\b|\bthrobbing head\b|\bpounding head\b|\bskull pain\b|\bchronic headache\b|\bhead pressure\b|\bsevere headache\b|\bhead pain that won't go away\b|\bsharp pulsating head pain\b|\bhead hurting\b|\bmigraines\b|\bintense head pain\b|\bpain in the head\b|\bconstant headache\b|\bsharp headache\b|\bpainful skull\b|\bthrobbing in the skull\b|\bmigraine episode\b|\bpounding sensation in head\b|\bneck and head pain\b|\bsevere throbbing head\b|\bheadache every day\b", user_message):
         issues.append("ból głowy")
 
-    if re.search(r"\bscreen time\b|\busing devices before sleep\b|\bblue light\b|\bphone before bed\b|\bwatching tv in bed\b|\busing phone in bed\b|\blooking at screens before sleep\b|\belectronic device use before bed\b|\bchecking phone before bed\b|\belectronic distractions\b|\bbright screens before bed\b|\bblue light exposure\b|\busing laptop at night\b|\busing tablet before bed\b|\bstaring at screen too long\b|\bchecking social media at night\b|\bscreen use before sleep\b|\bwatching phone before sleep\b|\bchecking emails before bed\b|\bwatching video on screen before sleep\b|\busing smartphone before bed\b|\busing technology too much before sleep\b|\boveruse of electronics at night\b|\blate-night phone use\b", user_message):
+    if re.search(r"\bscreen time\b|\busing devices before sleep\b|\bblue light\b|\bphone before bed\b|\bwatching tv in bed\b|\busing phone in bed\b|\blooking at screens before sleep\b|\belectronic device use before bed\b|\bchecking phone before bed\b|\belectronic distractions\b|\bbright screens before bed\b|\bblue light exposure\b|\busing laptop at night\b|\busing tablet before bed\b|\bstaring at screen too long\b|\bchecking social media at night\b|\bscreen use before sleep\b|\bwatching phone before sleep\b|\bchecking emails before bed\b|\bwatching video on screen before sleep\b|\busing smartphone before bed\b|\busing technology too much before sleep\b|\boveruse of electronics at night\b|\bphone\b", user_message):
         issues.append("zaburzenia snu z powodu korzystania z urządzeń elektronicznych")
 
     if not issues:
@@ -126,17 +122,19 @@ recommendations = {
 def generate_recommendation(user_message):
     issues = analyze_sleep_issues(user_message)
     if issues == "ok":
-        return "Everything seems fine. Keep up the good work!"
-    
+        return """I couldn't spot any clear concerns about your sleep habits at the moment. 
+                  However, DreamMate still recommends keeping a consistent bedtime routine and limiting screen time before bed.
+                  If anything else comes to mind, feel free to share more details!"""
+     
     advice = []
     for issue in issues:
         if issue in recommendations:
-            advice.append(recommendations[issue])
+            advice.append(f"•{recommendations[issue]}")
     
-    return "Here is what you can do to improve your sleep:\n" + "\n".join(advice)
+    return "Here is what you can do to improve your sleep:\n\n" + "\n".join(advice)
 
 
-test_message = "I keep waking up frequently at night, and my sleep feels very shallow. I also experience vivid dreams and night sweats."
-print(analyze_sleep_issues(test_message))
+# test_message = "I keep waking up frequently at night, and my sleep feels very shallow. I also experience vivid dreams and night sweats."
+# print(analyze_sleep_issues(test_message))
 
-print(generate_recommendation(test_message))
+# print(generate_recommendation(test_message))
