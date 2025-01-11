@@ -131,7 +131,7 @@ def generate_recommendation(user_message):
         if issue in recommendations:
             advice.append(f"•{recommendations[issue]}")
     
-    return "Here is what you can do to improve your sleep:\n\n" + "\n".join(advice)
+    return "Here is what you can do to improve your sleep:\n" + "\n".join(advice)
 
 
 # test_message = "I keep waking up frequently at night, and my sleep feels very shallow. I also experience vivid dreams and night sweats."
