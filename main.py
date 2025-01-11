@@ -62,7 +62,8 @@ class ChatApp(App):
                 text=dream_title,
                 size_hint=(1, None),
                 halign='center',
-                valign='middle'
+                valign='middle',
+                font_name='resources/poppins-med.ttf'
             )
             title_label.text_size = title_label.size
             entry_box.add_widget(title_label)
@@ -83,16 +84,21 @@ class ChatApp(App):
 
     def _create_top_bar(self):
         self.top_bar = BoxLayout(
-            size_hint_y=None, 
-            height=200, 
-            padding=[10, 10, 20, 10], 
-            spacing=10, 
+            size_hint_y=None,
+            height=200,
+            padding=[10, 10, 10, 10],
             orientation='horizontal',
-            pos_hint={'center_x': 0.5, 'center_y': 0.5}
         )
         self._add_background(self.top_bar, (0.278, 0.250, 0.455, 1))
 
-        central_layout = BoxLayout(orientation='horizontal', size_hint=(None, None), spacing=15)
+        self.top_bar.add_widget(Widget(size_hint=(1, 1)))
+
+        central_layout = BoxLayout(
+            orientation='horizontal',
+            size_hint=(None, None),
+            spacing=20,
+            pos_hint={'center_x': 0.5, 'center_y': 0.5}
+        )
 
         emotions = [
             ("resources/happiness.png", "0%", "happiness"),
@@ -114,10 +120,12 @@ class ChatApp(App):
         self.new_button.bind(on_press=self.start_new_chat)
         central_layout.add_widget(self.new_button)
 
-        self.top_bar.add_widget(Widget(size_hint=(0.3, 1)))
         self.top_bar.add_widget(central_layout)
-        self.top_bar.add_widget(Widget(size_hint=(1, 1)))
+
+        self.top_bar.add_widget(Widget(size_hint=(1.75, 1)))
+
         self.right_layout.add_widget(self.top_bar)
+
 
     def _create_emotion_widget(self, icon_source, percentage, parent_layout, emotion_key):
         layout = BoxLayout(orientation='vertical', size_hint=(None, None), size=(80, 120))
@@ -133,7 +141,7 @@ class ChatApp(App):
 
     def _create_chat_area(self):
         self.scroll_view = ScrollView(size_hint=(1, 1))
-        self._add_background(self.scroll_view, (0.378, 0.350, 0.555, 1))
+        self._add_background(self.scroll_view, (0.278, 0.250, 0.455, 1))
 
         self.messages_layout = GridLayout(cols=1, size_hint_y=None, spacing=10)
         self.messages_layout.bind(minimum_height=self.messages_layout.setter('height'))
@@ -142,7 +150,7 @@ class ChatApp(App):
         self.right_layout.add_widget(self.scroll_view)
 
     def _create_bottom_bar(self):
-        self.bottom_bar = BoxLayout(size_hint_y=None, height=90)
+        self.bottom_bar = BoxLayout(size_hint_y=None, height=130)
 
         self.text_input = TextInput(
             hint_text="Describe your dream and well-being...",
@@ -155,9 +163,11 @@ class ChatApp(App):
             background_normal='',
             background_active=''
         )
+        self.text_input.size_hint_x = 0.8 # takes up 80% of the space
 
         self.send_button = Button(
             text="Send",
+            size_hint_x=0.1,
             background_color=(0.278, 0.250, 0.455, 1),
             color=(1, 1, 1, 1),
             font_name='resources/poppins.ttf'
@@ -166,7 +176,8 @@ class ChatApp(App):
 
         self.save_button = Button(
             text="Save",
-            background_color=(0.378, 0.350, 0.555, 1),
+            size_hint_x=0.1,
+            background_color=(0.278, 0.250, 0.455, 1),
             color=(1, 1, 1, 1),
             font_name='resources/poppins.ttf'
         )
@@ -175,6 +186,7 @@ class ChatApp(App):
         self.bottom_bar.add_widget(self.text_input)
         self.bottom_bar.add_widget(self.send_button)
         self.bottom_bar.add_widget(self.save_button)
+
         self.right_layout.add_widget(self.bottom_bar)
 
     def _add_background(self, widget, color, radius=None):
@@ -242,23 +254,30 @@ class ChatApp(App):
         self.text_input.text = ""
 
     def _add_message(self, message, is_user):
-        alignment = 'right' if is_user else 'left'
-        bg_color = (0.9, 0.9, 1, 1) if is_user else (0.8, 0.8, 0.8, 1)
+        if is_user:
+            alignment = 'right'
+            bg_color = (0.9, 0.9, 1, 1)
+            text_color = (0, 0, 0, 1)
+        else:
+            alignment = 'left'
+            bg_color = (0.75, 0.70, 0.9, 1)
+            text_color = (0, 0, 0, 1)
 
         message_label = Label(
             text=message,
             size_hint_y=None,
             halign=alignment,
             valign='middle',
-            color=(0, 0, 0, 1),
-            font_name='resources/poppins.ttf'
+            color= text_color,
+            font_name='resources/poppins-med.ttf'
         )
         message_label.text_size = (self.scroll_view.width * 0.9, None)
         message_label.bind(texture_size=self._adjust_label_height)
 
         with message_label.canvas.before:
             Color(*bg_color)
-            message_label.bg_rect = Rectangle(size=message_label.size, pos=message_label.pos)
+            message_label.bg_rect = RoundedRectangle(size=message_label.size, pos=message_label.pos, radius=[15])
+        
         message_label.bind(size=self._update_bg_rect, pos=self._update_bg_rect)
 
         self.messages_layout.add_widget(message_label)
