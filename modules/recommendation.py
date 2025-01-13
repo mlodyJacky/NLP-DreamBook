@@ -122,16 +122,14 @@ recommendations = {
 def generate_recommendation(user_message):
     issues = analyze_sleep_issues(user_message)
     if issues == "ok":
-        return """I couldn't spot any clear concerns about your sleep habits at the moment. 
-                  However, DreamMate still recommends keeping a consistent bedtime routine and limiting screen time before bed.
-                  If anything else comes to mind, feel free to share more details!"""
+        return """I couldn't spot any clear concerns about your sleep habits at the moment.\nHowever, DreamMate still recommends keeping a consistent bedtime routine and limiting screen time before bed.\nIf anything else comes to mind, feel free to share more details!"""
      
     advice = []
     for issue in issues:
         if issue in recommendations:
             advice.append(f"•{recommendations[issue]}")
     
-    return "Here is what you can do to improve your sleep:\n" + "\n".join(advice)
+    return "Here's what you can do to improve your sleep:\n" + "\n".join(advice)
 
 
 # test_message = "I keep waking up frequently at night, and my sleep feels very shallow. I also experience vivid dreams and night sweats."

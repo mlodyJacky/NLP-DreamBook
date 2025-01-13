@@ -5,6 +5,7 @@ from kivy.app import App
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
@@ -15,6 +16,8 @@ from modules.interpretation import create_interpretation
 from modules.recommendation import generate_recommendation
 from modules.use_sentiment_analysis_model import predict_emotion
 from modules.generate_dream_title import generate_dream_title
+
+Window.size = (900, 600) 
 
 class ChatApp(App):
     DATA_FILE = "chat_logs.json"
@@ -39,7 +42,7 @@ class ChatApp(App):
 
     def _create_left_panel(self):
         self.left_layout = BoxLayout(size_hint=(0.2, 1))
-        self._add_background(self.left_layout, (0.278, 0.250, 0.455, 1))
+        self._add_background(self.left_layout, (0.278, 0.250, 0.555, 1))
 
         self.left_scroll = ScrollView(size_hint=(1, 1))
         self.left_grid = GridLayout(cols=1, size_hint_y=None, spacing=10, padding=10)
@@ -54,7 +57,7 @@ class ChatApp(App):
     def _populate_journal_entries(self):
         for i, chat_data in enumerate(self.chat_logs, start=1):
             entry_box = BoxLayout(size_hint=(1, None), height=100)
-            self._add_background(entry_box, (0.378, 0.350, 0.555, 1), radius=[10])
+            self._add_background(entry_box, (0.378, 0.350, 0.655, 1), radius=[10])
 
             dream_title = chat_data.get("dream_title", f"Dream {i}")
             
@@ -89,22 +92,38 @@ class ChatApp(App):
             padding=[10, 10, 10, 10],
             orientation='horizontal',
         )
-        self._add_background(self.top_bar, (0.278, 0.250, 0.455, 1))
 
-        self.top_bar.add_widget(Widget(size_hint=(1, 1)))
+        self._add_background(self.top_bar, (0.278, 0.250, 0.555, 1))
+
+        dreammate_label = Label(
+            text="DreamMate",
+            size_hint=(None, 1),
+            width=350,
+            halign='left',
+            valign='middle',
+            font_name='resources/timeburnerbold.ttf',
+            font_size='30sp',
+            color=(1, 1, 1, 1),
+            padding = [10, 10, 10, 130]
+        )
+        dreammate_label.bind(texture_size=self._adjust_label_size)
+        dreammate_label.text_size = (dreammate_label.width, None)
+        self.top_bar.add_widget(dreammate_label)
+
+        #self.top_bar.add_widget(Widget(size_hint=(1, 1)))
 
         central_layout = BoxLayout(
             orientation='horizontal',
             size_hint=(None, None),
             spacing=20,
-            pos_hint={'center_x': 0.5, 'center_y': 0.5}
+            pos_hint={'center_x': 0.8, 'center_y': 0.5}
         )
 
         emotions = [
-            ("resources/happiness.png", "0%", "happiness"),
-            ("resources/sadness.png", "0%", "sadness"),
-            ("resources/anger.png", "0%", "anger"),
-            ("resources/fear.png", "0%", "fear"),
+            ("resources/happy.png", "0%", "happiness"),
+            ("resources/cloud.png", "0%", "sadness"),
+            ("resources/storm.png", "0%", "anger"),
+            ("resources/ghost.png", "0%", "fear"),
         ]
         for icon, percentage, emotion_key in emotions:
             self._create_emotion_widget(icon, percentage, central_layout, emotion_key)
@@ -114,7 +133,7 @@ class ChatApp(App):
             size_hint=(None, None),
             size=(120, 60),
             background_color=(0.278, 0.250, 0.455, 1),
-            color=(1, 1, 1, 1),
+            color=(0.9, 0.9, 1, 1),
             font_name='resources/poppins.ttf',
         )
         self.new_button.bind(on_press=self.start_new_chat)
@@ -122,7 +141,7 @@ class ChatApp(App):
 
         self.top_bar.add_widget(central_layout)
 
-        self.top_bar.add_widget(Widget(size_hint=(1.75, 1)))
+        self.top_bar.add_widget(Widget(size_hint=(1.5, 1)))
 
         self.right_layout.add_widget(self.top_bar)
 
@@ -141,7 +160,7 @@ class ChatApp(App):
 
     def _create_chat_area(self):
         self.scroll_view = ScrollView(size_hint=(1, 1))
-        self._add_background(self.scroll_view, (0.278, 0.250, 0.455, 1))
+        self._add_background(self.scroll_view, (0.278, 0.250, 0.555, 1))
 
         self.messages_layout = GridLayout(cols=1, size_hint_y=None, spacing=10)
         self.messages_layout.bind(minimum_height=self.messages_layout.setter('height'))
@@ -156,7 +175,7 @@ class ChatApp(App):
             hint_text="Describe your dream and well-being...",
             multiline=True,
             foreground_color=(0, 0, 0, 1),
-            background_color=(0.9, 0.9, 0.9, 1),
+            background_color=(0.9, 0.9, 1, 1),
             font_size=16,
             padding=[10, 10],
             font_name='resources/poppins.ttf',
@@ -169,7 +188,7 @@ class ChatApp(App):
             text="Send",
             size_hint_x=0.1,
             background_color=(0.278, 0.250, 0.455, 1),
-            color=(1, 1, 1, 1),
+            color=(0.9, 0.9, 1, 1),
             font_name='resources/poppins.ttf'
         )
         self.send_button.bind(on_press=self.submit_text)
@@ -178,7 +197,7 @@ class ChatApp(App):
             text="Save",
             size_hint_x=0.1,
             background_color=(0.278, 0.250, 0.455, 1),
-            color=(1, 1, 1, 1),
+            color=(0.9, 0.9, 1, 1),
             font_name='resources/poppins.ttf'
         )
         self.save_button.bind(on_press=self.save_chat)
@@ -204,6 +223,9 @@ class ChatApp(App):
 
     def _adjust_label_height(self, instance, value):
         instance.height = instance.texture_size[1] + 10
+
+    def _adjust_label_size(self, instance, value):
+        instance.text_size = (instance.width, None)
 
     def submit_text(self, instance):
         user_message = self.text_input.text.strip()
@@ -296,7 +318,7 @@ class ChatApp(App):
         self.chat_logs.append(chat_data)
 
         entry_box = BoxLayout(size_hint=(1, None), height=100)
-        self._add_background(entry_box, (0.378, 0.350, 0.555, 1), radius=[10])
+        self._add_background(entry_box, (0.378, 0.350, 0.655, 1), radius=[10])
 
         title_label = Label(
             text=self.dream_title,

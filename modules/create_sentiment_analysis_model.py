@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import root_mean_squared_error
 import pickle
 
-with open('../dreams/dreams_with_emotions.json', 'r', encoding='utf-8') as f:
+with open('dreams/dreams_with_emotions.json', 'r', encoding='utf-8') as f:
     dreams_data = json.load(f)
 
 data = pd.DataFrame(dreams_data)
