@@ -71,10 +71,14 @@ class ChatApp(App):
             title_label.text_size = title_label.size
             entry_box.add_widget(title_label)
 
-            entry_box.bind(
-                on_touch_down=lambda instance, touch, idx=i:
-                    self.load_chat(idx) if instance.collide_point(*touch.pos) else None
-            )
+            # entry_box.bind(
+            #     on_touch_down=lambda instance, touch, idx=i:
+            #         self.load_chat(idx) if instance.collide_point(*touch.pos) else None
+            # )
+
+            entry_box.bind(on_touch_down=partial(self._on_entry_touch, entry_number=i))
+
+            entry_box.bind()
             
             self.left_grid.add_widget(entry_box)
 
@@ -121,9 +125,9 @@ class ChatApp(App):
 
         emotions = [
             ("resources/happy.png", "0%", "happiness"),
-            ("resources/cloud.png", "0%", "sadness"),
-            ("resources/storm.png", "0%", "anger"),
-            ("resources/ghost.png", "0%", "fear"),
+            ("resources/sad.png", "0%", "sadness"),
+            ("resources/anger.png", "0%", "anger"),
+            ("resources/fear.png", "0%", "fear"),
         ]
         for icon, percentage, emotion_key in emotions:
             self._create_emotion_widget(icon, percentage, central_layout, emotion_key)

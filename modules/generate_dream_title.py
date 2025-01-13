@@ -13,7 +13,7 @@ def generate_dream_title(dream_description):
         Title:
     """
 
-    model = OllamaLLM(model="llama3.2-vision")
+    model = OllamaLLM(model="mistral")
     prompt = ChatPromptTemplate.from_template(template)
     chain = prompt | model
     
@@ -23,8 +23,8 @@ def generate_dream_title(dream_description):
 
     return result
 
-# dream_description = """
-#     I was running from someone in an empty parking lot. It was seriously terrifying. It was dark, he was wearing a mask, and I could hear his footsteps behind me. I was running as fast as I could, but I couldn't seem to get away. I woke up in a cold sweat.
-# """
+dream_description = """
+    I was running from someone in an empty parking lot. It was seriously terrifying. It was dark, he was wearing a mask, and I could hear his footsteps behind me. I was running as fast as I could, but I couldn't seem to get away. I woke up in a cold sweat.
+"""
 
-# print(generate_dream_title(dream_description))
+print(generate_dream_title(dream_description))
