@@ -15,6 +15,7 @@ from kivy.uix.image import Image
 from modules.interpretation import create_interpretation
 from modules.recommendation import generate_recommendation
 from modules.use_sentiment_analysis_model import predict_emotion
+from modules.use_sentiment_analysis_jhartman import predict_emotions
 from modules.generate_dream_title import generate_dream_title
 
 Window.size = (900, 600) 
@@ -70,11 +71,6 @@ class ChatApp(App):
             )
             title_label.text_size = title_label.size
             entry_box.add_widget(title_label)
-
-            # entry_box.bind(
-            #     on_touch_down=lambda instance, touch, idx=i:
-            #         self.load_chat(idx) if instance.collide_point(*touch.pos) else None
-            # )
 
             entry_box.bind(on_touch_down=partial(self._on_entry_touch, entry_number=i))
 
@@ -140,11 +136,12 @@ class ChatApp(App):
             color=(0.9, 0.9, 1, 1),
             font_name='resources/poppins.ttf',
         )
+
         self.new_button.bind(on_press=self.start_new_chat)
+
         central_layout.add_widget(self.new_button)
 
         self.top_bar.add_widget(central_layout)
-
         self.top_bar.add_widget(Widget(size_hint=(1.5, 1)))
 
         self.right_layout.add_widget(self.top_bar)
@@ -158,6 +155,7 @@ class ChatApp(App):
 
         layout.add_widget(icon)
         layout.add_widget(label)
+
         parent_layout.add_widget(layout)
 
         self.emotion_labels[emotion_key] = label
@@ -186,7 +184,7 @@ class ChatApp(App):
             background_normal='',
             background_active=''
         )
-        self.text_input.size_hint_x = 0.8 # takes up 80% of the space
+        self.text_input.size_hint_x = 0.8
 
         self.send_button = Button(
             text="Send",
@@ -219,6 +217,7 @@ class ChatApp(App):
                 widget.bg_rect = RoundedRectangle(size=widget.size, pos=widget.pos, radius=radius)
             else:
                 widget.bg_rect = Rectangle(size=widget.size, pos=widget.pos)
+
         widget.bind(size=self._update_bg_rect, pos=self._update_bg_rect)
 
     def _update_bg_rect(self, instance, value):
@@ -245,16 +244,14 @@ class ChatApp(App):
         except Exception:
             interpretation = "Sorry, I couldn't analyze your dream. Please try again."
         self._add_message(
-            f"Discover the Meaning of Your Dream with DreamMate\n"
-            f"_________________________________________\n"
+            f"Discover the Meaning of Your Dream with DreamMate\n\n"
             f"{interpretation}",
             is_user=False
         )
 
         recommendation = generate_recommendation(user_message)
         self._add_message(
-            f"DreamMate's Secrets to a Restful Night\n"
-            f"_________________________________________\n"
+            f"DreamMate's Secrets to a Restful Night\n\n"
             f"{recommendation}",
             is_user=False
         )
@@ -271,8 +268,7 @@ class ChatApp(App):
             for emotion, percent in predicted_emotions.items()
         ])
         self._add_message(
-            f"Emotions Revealed by DreamMate\n"
-            f"_________________________________________\n"
+            f"Emotions Revealed by DreamMate\n\n"
             f"{emotions_text}",
             is_user=False
         )
@@ -328,8 +324,10 @@ class ChatApp(App):
             text=self.dream_title,
             size_hint=(1, None),
             halign='center',
-            valign='middle'
+            valign='middle',
+            font_name='resources/poppins-med.ttf'
         )
+
         title_label.text_size = title_label.size
         entry_box.add_widget(title_label)
 
@@ -377,7 +375,6 @@ class ChatApp(App):
             label.text = "0%"
 
         self.dream_title = ""
-
 
 if __name__ == "__main__":
     ChatApp().run()

@@ -16,12 +16,12 @@ def create_interpretation(dream_description):
     result = chain.invoke({"dream": dream_description})
     return result
 
-dream_description = """
-    I was being pursued by someone in a vehicle trying to run me down. Being in an orchard,
-    I was able to duck behind whatever tree was nearby. Then I found myself far from any tree trunk, 
-    but I managed to leap up, grab a branch, and pull myself to safety. However, the driver skidded the vehicle
-    to a stop and aimed a pistol at me. The click I heard which wakened me came from an alarm clock.
-    My heart was racing when I awoke.
-"""
+# dream_description = """
+#     I was being pursued by someone in a vehicle trying to run me down. Being in an orchard,
+#     I was able to duck behind whatever tree was nearby. Then I found myself far from any tree trunk, 
+#     but I managed to leap up, grab a branch, and pull myself to safety. However, the driver skidded the vehicle
+#     to a stop and aimed a pistol at me. The click I heard which wakened me came from an alarm clock.
+#     My heart was racing when I awoke.
+# """
 
-print(create_interpretation(dream_description))
+# print(create_interpretation(dream_description))
