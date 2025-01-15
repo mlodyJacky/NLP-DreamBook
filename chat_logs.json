@@ -24,7 +24,7 @@
             "sadness": 14.74,
             "fear": 68.76
         },
-        "dream_title": "\"Chased by Fear\""
+        "dream_title": "Chased by Fear"
     },
     {
         "messages": [
@@ -51,7 +51,7 @@
             "sadness": 3.86,
             "fear": 4.65
         },
-        "dream_title": "\"Summer's Simple Joy\""
+        "dream_title": "Summer's Simple Joy"
     },
     {
         "messages": [
@@ -78,7 +78,7 @@
             "sadness": 82.46,
             "fear": 58.44
         },
-        "dream_title": "\"Lonely Rainy Night\""
+        "dream_title": "Lonely Rainy Night"
     },
     {
         "messages": [
@@ -105,6 +105,60 @@
             "sadness": 27.29,
             "fear": 69.91
         },
-        "dream_title": "\"Suffocated by Darkness\""
+        "dream_title": "Suffocated by Darkness"
+    },
+    {
+        "messages": [
+            {
+                "text": "I had a dream about my childhood. I was relaxing in the countryside, playing with animals, enjoying the sun. It was lovely.",
+                "is_user": true
+            },
+            {
+                "text": "Discover the Meaning of Your Dream with DreamMate\n\n This dream embodies nostalgia and comfort, reflecting longing for innocence, peace, and simplicity from your childhood. It may indicate a need to reconnect with the carefree aspects of life or find joy in simple pleasures.",
+                "is_user": false
+            },
+            {
+                "text": "DreamMate's Secrets to a Restful Night\n\nI couldn't spot any clear concerns about your sleep habits at the moment.\nHowever, DreamMate still recommends keeping a consistent bedtime routine and limiting screen time before bed.\nIf anything else comes to mind, feel free to share more details!",
+                "is_user": false
+            },
+            {
+                "text": "Emotions Revealed by DreamMate\n\nHappiness: 11%\nAnger: 25%\nSadness: 20%\nFear: 29%",
+                "is_user": false
+            }
+        ],
+        "predicted_emotions": {
+            "happiness": 11.39,
+            "anger": 25.82,
+            "sadness": 20.25,
+            "fear": 29.93
+        },
+        "dream_title": "Sunlit Childhood Pastures"
+    },
+    {
+        "messages": [
+            {
+                "text": "I had a dream about going to my favourite artist's concert! It was so exciting, I felt like I was actually there! I woke up feeling happy, but a bit tired.",
+                "is_user": true
+            },
+            {
+                "text": "Discover the Meaning of Your Dream with DreamMate\n\n The dream symbolizes enthusiasm and connection with creativity. It reflects your passion for the arts and desire for an immersive experience. The happiness suggests emotional fulfillment, while the tiredness hints at the need for balance between work and enjoyment.",
+                "is_user": false
+            },
+            {
+                "text": "DreamMate's Secrets to a Restful Night\n\nHere's what you can do to improve your sleep:\n•Ensure regular sleep, aim for 7-9 hours of sleep each night, and maintain healthy habits before bed, such as avoiding electronic screens.\n•Ensure regular sleep, a healthy diet, and avoid excessive stress during the day. If the problem persists, consult a doctor.",
+                "is_user": false
+            },
+            {
+                "text": "Emotions Revealed by DreamMate\n\nHappiness: 97%\nAnger: 0%\nSadness: 17%\nFear: 4%",
+                "is_user": false
+            }
+        ],
+        "predicted_emotions": {
+            "happiness": 97.02,
+            "anger": 0.36,
+            "sadness": 17.74,
+            "fear": 4.04
+        },
+        "dream_title": " \"Concert Euphoria\""
     }
 ]
