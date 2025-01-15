@@ -110,33 +110,6 @@
     {
         "messages": [
             {
-                "text": "I had a dream about my childhood. I was relaxing in the countryside, playing with animals, enjoying the sun. It was lovely.",
-                "is_user": true
-            },
-            {
-                "text": "Discover the Meaning of Your Dream with DreamMate\n\n This dream embodies nostalgia and comfort, reflecting longing for innocence, peace, and simplicity from your childhood. It may indicate a need to reconnect with the carefree aspects of life or find joy in simple pleasures.",
-                "is_user": false
-            },
-            {
-                "text": "DreamMate's Secrets to a Restful Night\n\nI couldn't spot any clear concerns about your sleep habits at the moment.\nHowever, DreamMate still recommends keeping a consistent bedtime routine and limiting screen time before bed.\nIf anything else comes to mind, feel free to share more details!",
-                "is_user": false
-            },
-            {
-                "text": "Emotions Revealed by DreamMate\n\nHappiness: 11%\nAnger: 25%\nSadness: 20%\nFear: 29%",
-                "is_user": false
-            }
-        ],
-        "predicted_emotions": {
-            "happiness": 11.39,
-            "anger": 25.82,
-            "sadness": 20.25,
-            "fear": 29.93
-        },
-        "dream_title": "Sunlit Childhood Pastures"
-    },
-    {
-        "messages": [
-            {
                 "text": "I had a dream about going to my favourite artist's concert! It was so exciting, I felt like I was actually there! I woke up feeling happy, but a bit tired.",
                 "is_user": true
             },
